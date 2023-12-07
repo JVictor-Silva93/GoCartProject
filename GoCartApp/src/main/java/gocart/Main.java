@@ -1,6 +1,12 @@
 package src.main.java.gocart;
 
 import javax.swing.*;
+
+import src.main.java.gocart.controller.CustomerController;
+import src.main.java.gocart.controller.SellerController;
+import src.main.java.gocart.view.CustomerView;
+import src.main.java.gocart.view.SellerView;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,59 +14,57 @@ import java.awt.event.ActionListener;
 public class Main {
 
     public static void main(String[] args) {
-        // Set the look and feel to the system look and feel
+        //set the look and feel to the system look and feel
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        // Create and set up the main window
+        //create and set up the main window
         JFrame frame = new JFrame("GoCart - Shopping Application");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 300);
-        frame.setLocationRelativeTo(null);  // Center the window
+        frame.setLocationRelativeTo(null);
 
-        // Create buttons for customer and seller login
-        JButton customerButton = new JButton("Customer Login");
-        JButton sellerButton = new JButton("Seller Login");
+        //create buttons for customer and seller interface
+        JButton customerButton = new JButton("Open Customer Interface");
+        JButton sellerButton = new JButton("Open Seller Interface");
 
-        // Add action listeners to buttons
+        //action listeners to buttons
         customerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Open customer login dialog
-                CustomerLoginDialog dialog = new CustomerLoginDialog(frame);
-                dialog.setVisible(true);
-                if (dialog.isLoginSuccessful()) {
-                    // Proceed to customer interface
-                    openCustomerInterface();
-                }
+                openCustomerInterface();
             }
         });
 
         sellerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Open seller login dialog
-                SellerLoginDialog dialog = new SellerLoginDialog(frame);
-                dialog.setVisible(true);
-                if (dialog.isLoginSuccessful()) {
-                    // Proceed to seller interface
-                    openSellerInterface();
-                }
+                openSellerInterface();
             }
         });
 
-        // Create a panel and add buttons to it
+        //panel w/ buttons
         JPanel panel = new JPanel();
         panel.add(customerButton);
         panel.add(sellerButton);
 
-        // Add the panel to the frame
+        //add  panel to the frame
         frame.getContentPane().add(panel, BorderLayout.CENTER);
 
-        // Display the window
         frame.setVisible(true);
     }
+
+    private static void openCustomerInterface() {
+        CustomerController customerController = new CustomerController();
+        new CustomerView(customerController);
+    }
+
+    private static void openSellerInterface() {
+        SellerController sellerController = new SellerController();
+        new SellerView(sellerController);
+    }
+    
 }

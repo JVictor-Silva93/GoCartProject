@@ -12,7 +12,7 @@ import src.main.java.gocart.model.User;
 public class LoginView extends JFrame{
     private LoginController loginController;
 
-    // UI Components
+    //UI Components
     private JTextField usernameField;
     private JPasswordField passwordField;
     private JButton loginButton;
@@ -29,17 +29,17 @@ public class LoginView extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridLayout(3, 2, 10, 10));
 
-        // Username
+        //username
         add(new JLabel("Username:"));
         usernameField = new JTextField();
         add(usernameField);
 
-        // Password
+        //password
         add(new JLabel("Password:"));
         passwordField = new JPasswordField();
         add(passwordField);
 
-        // Login Button
+        //login Button
         loginButton = new JButton("Login");
         loginButton.addActionListener(new ActionListener() {
             @Override
@@ -49,12 +49,12 @@ public class LoginView extends JFrame{
         });
         add(loginButton);
 
-        // Status Label
+        //status Label
         statusLabel = new JLabel();
         add(statusLabel);
 
-        // Display the window
-        setLocationRelativeTo(null);  // Center the window
+        //display the window
+        setLocationRelativeTo(null);  //center the window
         setVisible(true);
     }
 
@@ -65,8 +65,8 @@ public class LoginView extends JFrame{
         User user = loginController.login(username, password);
         if (user != null) {
             statusLabel.setText("Login successful");
-            // Proceed based on user role
-            // For example, open CustomerView or SellerView based on user.getRole()
+            //proceed based on user role
+            //for example, open CustomerView or SellerView based on user.getRole()
         } else {
             statusLabel.setText("Login failed");
         }

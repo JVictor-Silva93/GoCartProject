@@ -15,7 +15,7 @@ public class SellerView {
 
     private SellerController sellerController;
 
-    // UI Components
+    //UI Components
     private JList<Product> productList;
     private JButton addButton;
     private JButton updateButton;
@@ -33,20 +33,20 @@ public class SellerView {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        // Product List
+        //product List
         productList = new JList<>();
         updateProductList();
         JScrollPane scrollPane = new JScrollPane(productList);
         add(scrollPane, BorderLayout.CENTER);
 
-        // Panel for buttons
+        //panel for buttons
         JPanel buttonPanel = new JPanel();
         addButton = new JButton("Add Product");
         updateButton = new JButton("Update Product");
         removeButton = new JButton("Remove Product");
         viewMetricsButton = new JButton("View Sales Metrics");
 
-        // Add action listeners
+        //Add action listeners
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

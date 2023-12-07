@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import src.main.java.gocart.model.Product;
 import src.main.java.gocart.model.User;
@@ -52,10 +54,34 @@ public class DatabaseUtil {
         return null;
     }
 
-    // Other database operations like addProduct, updateProduct, etc., can be added here
+    /**
+     * Retrieves all products available in the inventory.
+     * 
+     * @return A list of products.
+     */
+    public static List<Product> getAllProducts() {
+        String sql = "SELECT * FROM products";
+        List<Product> products = new ArrayList<>();
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) {
+                products.add(new Product(
+                    rs.getString("id"),
+                    rs.getString("name"),
+                    rs.getDouble("price"),
+                    rs.getString("description"),
+                    rs.getInt("quantity")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return products;
+    }
 
     /**
-     * Example method to add a product to the database.
+     * Adds a product to the database.
      * 
      * @param product The product to add.
      * @return true if the operation is successful; false otherwise.
@@ -79,4 +105,24 @@ public class DatabaseUtil {
         }
     }
 
+    /**
+     * Updates the inventory quantity for a given product.
+     * 
+     * @param product The product to update.
+     * @param quantityChange The change in quantity.
+     */
+    public static void updateProductInventory(Product product, int quantityChange) {
+        String sql = "UPDATE products SET quantity = quantity + ? WHERE id = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, quantityChange);
+            pstmt.setString(2, product.getId());
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Other database operations like updateProduct, removeProduct, etc., can be added here
 }
